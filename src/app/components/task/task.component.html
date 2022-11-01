@@ -1,0 +1,28 @@
+<div class="container pt-5">
+    <div class="row">
+        <div class="col">
+            <form #f="ngForm" (ngSubmit)="addTask(f)" novalidate>
+                <div class="row mb-3 g-2">
+                    <div class="col-md-10 col-sm-12">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" [(ngModel)]="inputTask" class="form-control" name="inputTask" placeholder="Describe the task">
+                            <label for="floatingInput">Describe the task</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary mb-3">Add task</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <app-list-task [listOfTask]="tasks"></app-list-task>
+        </div>
+    </div>
+</div>
+

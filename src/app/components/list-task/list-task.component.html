@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col" (cdkDropListDropped)="drop($any($event))">
+        <table class="table table-hover table-sm example-box">
+            <thead>
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+            </thead>
+            <tbody cdkDropList (cdkDropListDropped)="drop($any($event))">
+                <tr *ngFor="let task of listOfTask; let i=index;" cdkDrag >
+                
+                    <td class="align-middle" >
+                        <mat-slide-toggle class="example-margin" [(ngModel)]="task.status" (change)="checkTask(i, task)"
+                            [color]="'primary'" [checked]="task.status">
+                        </mat-slide-toggle>
+                    </td>
+                    <td class="text-start align-middle">
+                        <label [ngClass]="task.status ? 'text-muted text-decoration-line-through': 'text-dark'">
+                            {{task.describe}}
+                        </label>
+                    </td>
+                    <td class="text-end valign-middle">
+                        <button mat-icon-button 
+                            [disabled]="task.status"
+                            [matMenuTriggerFor]="menu" 
+                            aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" xPosition="before">
+
+                            <button mat-menu-item data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" (click)="setTaskToEdit(i, task)">
+                                <mat-icon>edit_note</mat-icon>
+                                <span>Edit</span>
+                            </button>
+
+                            <button mat-menu-item (click)="removeTask(i)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </tr>
+                <tr *ngIf="listOfTask.length < 1" class="text-center lead">
+                    <td colspan="3"> No entries register</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Task</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Leave a comment here" [(ngModel)]="taskToEdit.describe"
+                        name="taskToEdit" id="taskToEdit" [value]="taskToEdit.describe"></textarea>
+                    <label for="taskToEdit">Comments</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary"
+                    (click)="saveTaskToEdit(taskToEdit.id, taskToEdit.describe)" data-bs-dismiss="modal"
+                    aria-label="Close">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
