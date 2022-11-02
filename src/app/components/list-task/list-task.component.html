@@ -1,75 +1,102 @@
-<div class="row">
-    <div class="col" (cdkDropListDropped)="drop($any($event))">
-        <table class="table table-hover table-sm example-box">
-            <thead>
-                <tr>
-                    <td colspan="3"></td>
-                </tr>
-            </thead>
-            <tbody cdkDropList (cdkDropListDropped)="drop($any($event))">
-                <tr *ngFor="let task of listOfTask; let i=index;" cdkDrag >
-                
-                    <td class="align-middle" >
-                        <mat-slide-toggle class="example-margin" [(ngModel)]="task.status" (change)="checkTask(i, task)"
-                            [color]="'primary'" [checked]="task.status">
-                        </mat-slide-toggle>
-                    </td>
-                    <td class="text-start align-middle">
-                        <label [ngClass]="task.status ? 'text-muted text-decoration-line-through': 'text-dark'">
-                            {{task.describe}}
-                        </label>
-                    </td>
-                    <td class="text-end valign-middle">
-                        <button mat-icon-button 
-                            [disabled]="task.status"
-                            [matMenuTriggerFor]="menu" 
-                            aria-label="Example icon-button with a menu">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu" xPosition="before">
+<div (cdkDropListDropped)="drop($any($event))" cdkDropList>
+  <div
+    class="card my-2 border-start border-5 example-box"
+    [ngClass]="task.status ? '' : 'border-warning'"
+    *ngFor="let task of listOfTask; let i = index"
+    cdkDrag
+  >
+    <div class="row">
+      <div class="col-2">
+        <mat-slide-toggle
+          class="py-4 px-2"
+          [(ngModel)]="task.status"
+          (change)="checkTask(i, task)"
+          [color]="'primary'"
+          [checked]="task.status"
+        ></mat-slide-toggle>
+      </div>
+      <div class="col-10">
+        <div class="card-body">
+          <div class="row">
+            <div
+              class="col-10 card-text"
+              [ngClass]="
+                task.status
+                  ? 'text-muted text-decoration-line-through'
+                  : 'text-dark'
+              "
+            >
+            {{ task.describe }}
+             
+            </div>
+            <div class="col-2 text-end valign-middle">
+              <button
+                mat-icon-button
+                [disabled]="task.status"
+                [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu"
+              >
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button
+                  mat-menu-item
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  (click)="setTaskToEdit(i, task)"
+                >
+                  <mat-icon>edit_note</mat-icon>
+                  <span>Edit</span>
+                </button>
 
-                            <button mat-menu-item data-bs-toggle="modal"
-                                data-bs-target="#exampleModal" (click)="setTaskToEdit(i, task)">
-                                <mat-icon>edit_note</mat-icon>
-                                <span>Edit</span>
-                            </button>
-
-                            <button mat-menu-item (click)="removeTask(i)">
-                                <mat-icon>delete</mat-icon>
-                                <span>Delete</span>
-                            </button>
-                        </mat-menu>
-                    </td>
-                </tr>
-                <tr *ngIf="listOfTask.length < 1" class="text-center lead">
-                    <td colspan="3"> No entries register</td>
-                </tr>
-            </tbody>
-        </table>
+                <button mat-menu-item (click)="removeTask(i)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+          <!--div class="row">
+            <div class="col card-text">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div-->
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Task</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-floating">
-                    <textarea class="form-control" placeholder="Leave a comment here" [(ngModel)]="taskToEdit.describe"
-                        name="taskToEdit" id="taskToEdit" [value]="taskToEdit.describe"></textarea>
-                    <label for="taskToEdit">Comments</label>
-                </div>
-            </div>
-            <div class="modal-footer">
 
-                <button type="button" class="btn btn-primary"
-                    (click)="saveTaskToEdit(taskToEdit.id, taskToEdit.describe)" data-bs-dismiss="modal"
-                    aria-label="Close">Save changes</button>
-            </div>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>Edit Task</mat-label>
+          <textarea matInput placeholder="Leave a comment here" [(ngModel)]="taskToEdit.describe" name="taskToEdit" id="taskToEdit" [value]="taskToEdit.describe" ></textarea>
+        </mat-form-field>
+        <div class="d-grid gap-2">
+          <button
+            type="button"
+            class="btn btn-primary btn-sm"
+            (click)="saveTaskToEdit(taskToEdit.id, taskToEdit.describe)"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            Save changes
+          </button>
         </div>
+      </div>
+
     </div>
+  </div>
 </div>

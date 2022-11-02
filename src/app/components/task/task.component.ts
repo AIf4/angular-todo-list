@@ -32,6 +32,21 @@ export class TaskComponent implements OnInit {
     this._snackBar.open("Task save", "");
   }
 
+  showTaskForStatus(status: string){
+    switch (status) {
+      case "COMPLETED":
+        
+        break;
+      case "PENDING":
+        
+        break;
+
+      default:
+
+        break;
+    }
+  }
+
 
 
 }

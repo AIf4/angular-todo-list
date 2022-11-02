@@ -16,6 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatButtonModule,
     DragDropModule,
     MatMenuModule,
-    MatTabsModule
+    MatTabsModule,
+    MatButtonToggleModule,
+    MatInputModule
   ],
   providers: [
     {

@@ -2,23 +2,23 @@
     <div class="row">
         <div class="col">
             <form #f="ngForm" (ngSubmit)="addTask(f)" novalidate>
-                <div class="row mb-3 g-2">
+                <div class="row mb-1">
                     <div class="col-md-10 col-sm-12">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" [(ngModel)]="inputTask" class="form-control" name="inputTask" placeholder="Describe the task">
-                            <label for="floatingInput">Describe the task</label>
-                        </div>
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Add task</mat-label>
+                            <input matInput placeholder="Ex. Pizza" [(ngModel)]="inputTask" name="inputTask">
+                        </mat-form-field>
                     </div>
-                    <div class="col">
+                    <div class="col py-2">
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary mb-3">Add task</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Add task</button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-
+   
     <div class="row">
         <div class="col">
             <app-list-task [listOfTask]="tasks"></app-list-task>
